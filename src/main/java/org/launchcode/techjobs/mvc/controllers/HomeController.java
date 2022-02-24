@@ -16,6 +16,7 @@ public class HomeController {
     @GetMapping(value = "")
     public String index(Model model) {
 
+        //Creating a HashMap that will be used to create links in our "root" page. The links are list, and search.
         HashMap<String, String> actionChoices = new HashMap<>();
         actionChoices.put("search", "Search");
         actionChoices.put("list", "List");
