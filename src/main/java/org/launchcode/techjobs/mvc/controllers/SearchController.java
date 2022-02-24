@@ -34,16 +34,24 @@ public class SearchController {
     public String displaySearchResults(Model model, @RequestParam String searchType, @RequestParam(required = false)String searchTerm){
 
         ArrayList<Job> jobs;
-
-        if(searchType.equals("all") && searchTerm.equals("")){
-
+        //Check if user selects all and puts nothing or all in the text input.
+        if(searchType.equals("all") && searchTerm.equals("") || searchTerm.toLowerCase().equals("all")){
+            //if so then jobs is all of the jobs in JobData using the findALl method.
             jobs = JobData.findAll();
+            model.addAttribute("title", "All Jobs");
 
+        //if user selects all but inputs something in the text input.
         }else if(searchType.equals("all")){
+            //utilize the find by value which will be the String searchTerm.
             jobs = JobData.findByValue(searchTerm);
+            model.addAttribute("title", "Jobs with All: " + searchTerm);
+
 
         }else{
+            //if the user selects something else and inputs text.
             jobs = JobData.findByColumnAndValue(searchType, searchTerm);
+            model.addAttribute("title", "Jobs with " + columnChoices.get(searchType) + ": " + searchTerm);
+
         }
 
         model.addAttribute("jobs",jobs);
